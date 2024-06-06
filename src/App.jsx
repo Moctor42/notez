@@ -1,12 +1,16 @@
 import { useState } from 'react'
+import { Header } from './Components/Header'
+import { Noteslist } from './Components/Noteslist'
+import { Createnote } from './Components/Createnote'
 
-function App() {
+function App () {
   return (
-    <div className='min-h-svh flex bg-slate-400'>
-      <h1 className='p-4 m-2 basis-0 bg-slate-300 flex font-sans text-5xl '>
-        Notez
-      </h1>
+    <div className='grid grid-cols-2'>
+      <Header />
+      <Noteslist />
+      <Createnote />
     </div>
+    
   )
 }
 
