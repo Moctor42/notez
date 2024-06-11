@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export const Notecard = ({ title, body, timeStamp, handleDelete, setTitle, setText, setOriginalTimeStamp, setPanelStatus }) => {
+    const [confirmDelete, setConfirmDelete] = useState(false)
 
     const creationDate = new Date(timeStamp)
 
@@ -12,20 +13,26 @@ export const Notecard = ({ title, body, timeStamp, handleDelete, setTitle, setTe
     }
 
     return (
-        <div onClick={handleClick}
-            className='h-min w-64 border-solid  border-black border-4 rounded-lg m-2 p-2 bg-white'>
-            <h3 className='text-xl'>
+        <div 
+            className='h-min w-64 rounded-lg m-2 p-3 bg-white shadow-lg shadow-gray-700 '>
+            <div onClick={handleClick}>
+                <h3 className='text-xl font-bold mb-3'>
                 {title}
             </h3>
-            <p>
+            <p className='text-md mb-3'>
                 {body}
             </p>
             <p className='text-sm   text-gray-400'>
-                {creationDate.toDateString()}
+                Created {creationDate.toDateString()}
             </p>
-            <button onClick={()=>{handleDelete(timeStamp)}}>
-            delete
+            </div>
+            
+            <button 
+            className='z-10'
+            onClick={()=>{handleDelete(timeStamp)}}>
+            delete note
             </button>
+            
         </div>
     );
 };

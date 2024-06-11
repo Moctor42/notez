@@ -92,14 +92,14 @@ export const App = () => {
   }, [update])
 
   return (
-    <div className=''>
+    <div className='h-svh'>
       <Header 
         setPanelStatus={setPanelStatus}
         setOriginalTimeStamp={setOriginalTimeStamp}
         setTitle={setTitle}
         setText={setText}
       />
-      <div className='flex w-full'>
+      <div className='flex w-full justify-end h-full'>
         <Noteslist
           notes={notes}
           handleDelete={handleDelete}
