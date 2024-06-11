@@ -1,13 +1,117 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { Header } from './Components/Header'
+import { Noteslist } from './Components/Noteslist'
+import { Createnote } from './Components/Createnote'
 
-function App() {
+export const App = () => {
+  const [notes, setNotes] = useState([])
+  const [update, setUpdate] = useState(false)
+  const [text, setText] = useState("")
+  const [title, setTitle] = useState("")
+  const [originalTimeStamp, setOriginalTimeStamp] = useState(undefined)
+  const [panelStatus, setPanelStatus] = useState(0)
+
+  //loads notes array from local storage 
+  useEffect(() => {
+    const storedNotes = JSON.parse(localStorage.getItem("notes"))
+    if (storedNotes) {
+      setNotes(storedNotes)
+      console.log("notes loaded from localstorage", storedNotes);
+    }
+
+  }, [])
+
+  const handleText = (event) => {
+    setText(event.target.value)
+    console.log("text changed!");
+  }
+  const handleTitle = (event) => {
+    setTitle(event.target.value)
+    console.log("title changed!");
+  }
+
+  const handleSave = () => {
+    if (!originalTimeStamp) {
+      const updatedNotes = [
+          {
+            title: title,
+            body: text,
+            timeStamp: Date.now()
+          },
+          ...notes
+        ]
+      setNotes(updatedNotes)
+    } else if (originalTimeStamp) {
+      const otherNotes = notes.filter((note) => note.timeStamp !== originalTimeStamp)
+      const updatedNotes = [
+        {
+          title: title,
+          body: text,
+          timeStamp: originalTimeStamp
+        },
+        ...otherNotes
+      ]
+    setNotes(updatedNotes)
+    }
+    setUpdate(true)
+    console.log("note saved!");
+    setPanelStatus(0)
+  }
+
+  const handleDelete = (timeStamp) => {
+    const undeletedNotes = notes.filter((note) => note.timeStamp !== timeStamp)
+    setNotes(undeletedNotes)
+    setUpdate(true)
+    console.log("note deleted!");
+  }
+
+  const handlePanel = (panelStatus) => {
+    if (panelStatus == 1) {
+      return <Createnote
+        title={title}
+        text={text}
+        handleText={handleText}
+        handleTitle={handleTitle}
+        setPanelStatus={setPanelStatus}
+        handleSave={handleSave}
+        originalTimeStamp={originalTimeStamp}
+      />
+    } else {
+      return null
+    }
+  }
+
+  // saves notes array to localstorage
+  useEffect(() => {
+    console.log(notes);
+    if (update) {
+      localStorage.setItem("notes", JSON.stringify(notes))
+      console.log("notes saved to localstorage", notes)
+      setUpdate(false)
+    };
+  }, [update])
+
   return (
-    <div className='min-h-svh flex bg-slate-400'>
-      <h1 className='p-4 m-2 basis-0 bg-slate-300 flex font-sans text-5xl '>
-        Notez
-      </h1>
+    <div className=''>
+      <Header 
+        setPanelStatus={setPanelStatus}
+        setOriginalTimeStamp={setOriginalTimeStamp}
+        setTitle={setTitle}
+        setText={setText}
+      />
+      <div className='flex w-full'>
+        <Noteslist
+          notes={notes}
+          handleDelete={handleDelete}
+          setTitle={setTitle}
+          setText={setText}
+          setOriginalTimeStamp={setOriginalTimeStamp}
+          setPanelStatus={setPanelStatus}
+        />
+        {handlePanel(panelStatus)}
+      </div>
+
     </div>
   )
 }
 
-export default App
