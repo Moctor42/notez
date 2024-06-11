@@ -9,17 +9,17 @@ export const Header = ({setPanelStatus, setOriginalTimeStamp, setTitle, setText}
         setPanelStatus(1)
     }
     return (
-        <div className='bg-white min-w-full max-h-20 flex justify-evenly'>
+        <div className='bg-yellow-300 min-w-full h-40 flex justify-between'>
             
             <div className='w-32'>
 
             </div>
-            <h1 className='text-5xl font-sans self-center'>
-                Notez
+            <h1 className='text-7xl font-sans self-end m-4 font-bold'>
+                notez
             </h1>
-            <button className='text-3xl font-sans self-end border-solid border-2 border-black rounded-3xl px-4 py-1 m-2'
+            <button className='text-2xl font-bold font-sans self-start shadow-lg shadow-gray-600 rounded-3xl px-10 py-2 m-6 bg-white'
             onClick={()=>{handleClick()}}>
-                new note
+                New note
             </button>
         </div>
     );

@@ -22,7 +22,7 @@ export const Noteslist = ({ notes, handleDelete, setTitle, setText, setOriginalT
 
     return (
 
-        <div className='flex flex-wrap justify-center border-solid border-2 border-black m-2'>
+        <div className='flex flex-wrap justify-center m-2 w-full'>
             {notesList}
         </div>
 
