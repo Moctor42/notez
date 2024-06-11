@@ -1,17 +1,31 @@
 import React from 'react';
 
-export const Notecard = () => {
+export const Notecard = ({ title, body, timeStamp, handleDelete, setTitle, setText, setOriginalTimeStamp, setPanelStatus }) => {
+
+    const creationDate = new Date(timeStamp)
+
+    const handleClick = () => {
+        setTitle(title)
+        setText(body)
+        setOriginalTimeStamp(timeStamp)
+        setPanelStatus(1)
+    }
+
     return (
-        <div className='w-48 h-min border-solid border-black border-4 rounded-lg m-4 p-2 bg-white'>
+        <div onClick={handleClick}
+            className='h-min w-64 border-solid  border-black border-4 rounded-lg m-2 p-2 bg-white'>
             <h3 className='text-xl'>
-                Title
+                {title}
             </h3>
             <p>
-                lorem ipsum uhhh blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah 
+                {body}
             </p>
-            <p className='text-sm text-gray-400'>
-                30/04/2024
+            <p className='text-sm   text-gray-400'>
+                {creationDate.toDateString()}
             </p>
+            <button onClick={()=>{handleDelete(timeStamp)}}>
+            delete
+            </button>
         </div>
     );
 };
